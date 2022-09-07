@@ -5,14 +5,12 @@ import (
 	"crypto/x509"
 	"testing"
 
-	//"testing"
 	"encoding/json"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"sync"
 
-	//"golang.org/x/net/http2"
 	"github.com/Bimde/grpc-vs-rest/pb"
 	"golang.org/x/net/http2"
 )
@@ -49,7 +47,7 @@ func createTLSConfigWithCustomCert() *tls.Config {
 // 	wg.Add(b.N)
 // 	for i := 0; i < b.N; i++ {
 // 		go func() {
-// 			get("https://bimde:8080", &pb.Random{})
+// 			get("https://localhost:8080", &pb.Random{})
 // 			wg.Done()
 // 		}()
 // 	}
@@ -100,7 +98,7 @@ func BenchmarkHTTP2GetWithWokers(b *testing.B) {
 	defer startWorkers(&requestQueue, noWorkers, startWorker)()
 	b.ResetTimer() // don't count worker initialization time
 	for i := 0; i < b.N; i++ {
-		requestQueue <- Request{Path: "https://bimde:8080", Random: &pb.Random{}}
+		requestQueue <- Request{Path: "https://localhost:8080", Random: &pb.Random{}}
 	}
 }
 
@@ -112,7 +110,7 @@ func BenchmarkHTTP11Get(b *testing.B) {
 	defer startWorkers(&requestQueue, noWorkers, startWorker)()
 	b.ResetTimer() // don't count worker initialization time
 	for i := 0; i < b.N; i++ {
-		requestQueue <- Request{Path: "https://bimde:8080", Random: &pb.Random{}}
+		requestQueue <- Request{Path: "https://localhost:8080", Random: &pb.Random{}}
 	}
 }
 

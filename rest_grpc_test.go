@@ -15,7 +15,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-func BenchmarkHTTP2GetWithWokers(b *testing.B) {
+func BenchmarkHTTP2GetWithWokers2(b *testing.B) {
 	client.Transport = &http2.Transport{
 		TLSClientConfig: createTLSConfigWithCustomCert(),
 	}
@@ -24,7 +24,7 @@ func BenchmarkHTTP2GetWithWokers(b *testing.B) {
 	b.ResetTimer() // don't count worker initialization time
 	for i := 0; i < b.N; i++ {
 		requestQueue <- Request{
-			Path: "https://bimde:8080",
+			Path: "https://localhost:8080",
 			Random: &pb.Random{
 				RandomInt:    2019,
 				RandomString: "a_string",
@@ -34,7 +34,7 @@ func BenchmarkHTTP2GetWithWokers(b *testing.B) {
 }
 
 func BenchmarkGRPCWithWokers(b *testing.B) {
-	conn, err := grpc.Dial("bimde:9090", grpc.WithInsecure())
+	conn, err := grpc.Dial("localhost:9090", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Dial failed: %v", err)
 	}
