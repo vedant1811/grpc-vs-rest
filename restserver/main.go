@@ -9,6 +9,7 @@ import (
 )
 
 func handle(w http.ResponseWriter, req *http.Request) {
+	log.Print("handle")
 	decoder := json.NewDecoder(req.Body)
 	var random pb.Random
 	if err := decoder.Decode(&random); err != nil {
@@ -27,5 +28,6 @@ func handle(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 	server := &http.Server{Addr: "localhost:8080", Handler: http.HandlerFunc(handle)}
+	log.Print("main")
 	log.Fatal(server.ListenAndServeTLS("../server/server.crt", "../server/server.key"))
 }
