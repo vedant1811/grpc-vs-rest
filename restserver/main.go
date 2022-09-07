@@ -26,6 +26,6 @@ func handle(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-	server := &http.Server{Addr: "bimde:8080", Handler: http.HandlerFunc(handle)}
+	server := &http.Server{Addr: "localhost:8080", Handler: http.HandlerFunc(handle)}
 	log.Fatal(server.ListenAndServeTLS("../server/server.crt", "../server/server.key"))
 }
